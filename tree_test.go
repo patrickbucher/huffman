@@ -85,7 +85,22 @@ func TestBuildTree(t *testing.T) {
 			nodes: []Node{},
 			tree:  Node{},
 		},
-		// TODO: non-trivial test cases
+		testCase{
+			nodes: []Node{
+				Node{Symbols: []rune{'a'}, Weight: 1},
+				Node{Symbols: []rune{'b'}, Weight: 1},
+				Node{Symbols: []rune{'c'}, Weight: 3},
+				Node{Symbols: []rune{'d'}, Weight: 4},
+				Node{Symbols: []rune{'e'}, Weight: 7},
+			},
+			tree: Node{
+				Symbols: []rune{'a', 'b', 'c', 'd', 'e'},
+				Weight:  16,
+				// TODO: figure out the tree structure on paper...
+				Left:  nil,
+				Right: nil,
+			},
+		},
 	}
 	for _, test := range tests {
 		// TODO: call the function (to be implemented)
