@@ -34,7 +34,7 @@ func TestCountFrequency(t *testing.T) {
 	}
 	for text, expected := range tests {
 		actual := CountFrequency(text)
-		if !MapEqual(actual, expected) {
+		if !mapEqual(actual, expected) {
 			t.Errorf(`CountFrequency("%s"): expected %v, got %v`,
 				text, expected, actual)
 		}
@@ -68,14 +68,32 @@ func TestCreateLeaves(t *testing.T) {
 		expected := test.nodes
 		actual := CreateLeaves(test.frequencies)
 		fmt.Println(actual, expected)
-		if !NodeSliceEqual(actual, expected) {
+		if !nodeSliceEqual(actual, expected) {
 			t.Errorf(`CreateLeaves(%v): expected %v, got %v`,
 				test.frequencies, expected, actual)
 		}
 	}
 }
 
-func NodeSliceEqual(a, b []Node) bool {
+func TestBuildTree(t *testing.T) {
+	type testCase struct {
+		nodes []Node
+		tree  Node
+	}
+	tests := []testCase{
+		testCase{
+			nodes: []Node{},
+			tree:  Node{},
+		},
+		// TODO: non-trivial test cases
+	}
+	for _, test := range tests {
+		// TODO: call the function (to be implemented)
+		fmt.Println(test)
+	}
+}
+
+func nodeSliceEqual(a, b []Node) bool {
 	if len(a) != len(b) {
 		return false
 	}
@@ -87,7 +105,7 @@ func NodeSliceEqual(a, b []Node) bool {
 	return true
 }
 
-func MapEqual[K, V comparable](a, b map[K]V) bool {
+func mapEqual[K, V comparable](a, b map[K]V) bool {
 	if len(a) != len(b) {
 		return false
 	}
