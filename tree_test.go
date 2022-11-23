@@ -2,6 +2,7 @@ package huffman
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -54,33 +55,37 @@ func TestCreateLeaves(t *testing.T) {
 				Node{[]rune{'c'}, 3, nil, nil},
 			},
 		},
+		testCase{
+			frequencies: map[rune]int{'x': 7, 'y': 5, 'z': 9},
+			nodes: []Node{
+				Node{[]rune{'y'}, 5, nil, nil},
+				Node{[]rune{'x'}, 7, nil, nil},
+				Node{[]rune{'z'}, 9, nil, nil},
+			},
+		},
 	}
 	for _, test := range tests {
 		expected := test.nodes
 		actual := CreateLeaves(test.frequencies)
 		fmt.Println(actual, expected)
-		/*
-			if !SliceEqual(actual, expected) {
-				t.Errorf(`CreateLeaves(%v): expected %v, got %v`,
-					test.frequencies, expected, actual)
-			}
-		*/
+		if !NodeSliceEqual(actual, expected) {
+			t.Errorf(`CreateLeaves(%v): expected %v, got %v`,
+				test.frequencies, expected, actual)
+		}
 	}
 }
 
-/*
-func SliceEqual[V constraints.Ordered](a, b []V) bool {
+func NodeSliceEqual(a, b []Node) bool {
 	if len(a) != len(b) {
 		return false
 	}
 	for i := range a {
-		if a[i] != b[i] {
+		if !reflect.DeepEqual(a[i], b[i]) {
 			return false
 		}
 	}
 	return true
 }
-*/
 
 func MapEqual[K, V comparable](a, b map[K]V) bool {
 	if len(a) != len(b) {

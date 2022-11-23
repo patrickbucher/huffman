@@ -1,6 +1,8 @@
 package huffman
 
-import "sort"
+import (
+	"sort"
+)
 
 // Node is a tree node, i.e. either a leaf with a single symbol, or a node
 // further above the structure, containing all the symbols of the nodes below,
@@ -13,12 +15,16 @@ type Node struct {
 	Right   *Node
 }
 
+type Nodes []Node
+
+func (n Nodes) Len() int           { return len(n) }
+func (n Nodes) Less(i, j int) bool { return n[i].Weight < n[j].Weight }
+func (n Nodes) Swap(i, j int)      { n[i], n[j] = n[j], n[i] }
+
 // IsLeaf returns true iff the node represents exactly one symbol.
 func (n Node) IsLeaf() bool {
 	return len(n.Symbols) == 1
 }
-
-func (n Node) Compare(o Node) int { return n.Weight - o.Weight }
 
 // CountFrequency creates a map from the given text with the number of
 // occurrences for every rune.
@@ -34,7 +40,7 @@ func CountFrequency(text string) map[rune]int {
 // containing a single symbol, and the frequency as the weight. The nodes are
 // sorted in ascending order by their weight.
 func CreateLeaves(frequencies map[rune]int) []Node {
-	leafs := make([]Node, 0)
+	leaves := make(Nodes, 0)
 	for symbol, count := range frequencies {
 		node := Node{
 			Symbols: []rune{symbol},
@@ -42,10 +48,8 @@ func CreateLeaves(frequencies map[rune]int) []Node {
 			Left:    nil,
 			Right:   nil,
 		}
-		leafs = append(leafs, node)
+		leaves = append(leaves, node)
 	}
-	sort.Slice(leafs, func(i, j int) bool {
-		return leafs[i].Weight < leafs[j].Weight
-	})
-	return leafs
+	sort.Sort(leaves)
+	return leaves
 }
