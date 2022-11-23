@@ -1,6 +1,7 @@
 package huffman
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -38,6 +39,48 @@ func TestCountFrequency(t *testing.T) {
 		}
 	}
 }
+
+func TestCreateLeaves(t *testing.T) {
+	type testCase struct {
+		frequencies map[rune]int
+		nodes       []Node
+	}
+	tests := []testCase{
+		testCase{
+			frequencies: map[rune]int{'a': 1, 'b': 2, 'c': 3},
+			nodes: []Node{
+				Node{[]rune{'a'}, 1, nil, nil},
+				Node{[]rune{'b'}, 2, nil, nil},
+				Node{[]rune{'c'}, 3, nil, nil},
+			},
+		},
+	}
+	for _, test := range tests {
+		expected := test.nodes
+		actual := CreateLeaves(test.frequencies)
+		fmt.Println(actual, expected)
+		/*
+			if !SliceEqual(actual, expected) {
+				t.Errorf(`CreateLeaves(%v): expected %v, got %v`,
+					test.frequencies, expected, actual)
+			}
+		*/
+	}
+}
+
+/*
+func SliceEqual[V constraints.Ordered](a, b []V) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+*/
 
 func MapEqual[K, V comparable](a, b map[K]V) bool {
 	if len(a) != len(b) {
