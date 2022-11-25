@@ -6,6 +6,9 @@ type Bits []byte
 
 func Encode(message string) (Bits, *Node) {
 	tree := buildHuffmanTree(message)
+	if tree == nil || (tree.Left == nil && tree.Right == nil) {
+		panic("nothing to encode")
+	}
 	bits := make(Bits, 0)
 	for _, c := range message {
 		bits = append(bits, encode(c, tree)...)
