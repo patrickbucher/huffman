@@ -6,7 +6,7 @@ func TestCoding(t *testing.T) {
 	messages := []string{
 		"abacabacabaa",
 		"This is a test.",
-		"Это тоже тест.",
+		"Это тоже тесть.",
 		"The quick brown fox jumps over the lazy dog.",
 	}
 	for _, message := range messages {
