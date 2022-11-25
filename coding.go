@@ -2,8 +2,11 @@ package huffman
 
 import "fmt"
 
+// Bits represents a sequence of bits.
 type Bits []byte
 
+// Encode applies Huffman coding to the given message, and returns the encoded
+// bits, as well as the tree built up for this process.
 func Encode(message string) (Bits, *Node) {
 	tree := buildHuffmanTree(message)
 	if tree == nil || (tree.Left == nil && tree.Right == nil) {
@@ -21,9 +24,8 @@ func encode(symbol rune, tree *Node) Bits {
 	if tree.IsLeaf() {
 		if tree.Symbols[0] == symbol {
 			return bits
-		} else {
-			panic(fmt.Sprintf("%c not found in %v", symbol, tree))
 		}
+		panic(fmt.Sprintf("%c not found in %v", symbol, tree))
 	} else {
 		if contains(tree.Left.Symbols, symbol) {
 			bits = append(bits, 0)
@@ -46,6 +48,8 @@ func contains(symbols []rune, symbol rune) bool {
 	return false
 }
 
+// Decode decodes the given bit sequence using the given tree, and returns the
+// decoded string.
 func Decode(bits Bits, tree *Node) string {
 	message := ""
 	var symbol rune

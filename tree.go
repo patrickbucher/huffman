@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Node is an element of a Huffman tree.
 type Node struct {
 	Symbols []rune
 	Weight  int
@@ -13,6 +14,7 @@ type Node struct {
 	Right   *Node
 }
 
+// IsLeaf returns true if the node represents a single symbol; false otherwise.
 func (n Node) IsLeaf() bool {
 	return len(n.Symbols) == 1
 }
@@ -27,6 +29,7 @@ func (n Node) String() string {
 		symbols, n.Weight, n.Left, n.Right)
 }
 
+// Nodes is a slice of nodes.
 type Nodes []Node
 
 func (n Nodes) Len() int           { return len(n) }
