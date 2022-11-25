@@ -5,7 +5,7 @@ import "fmt"
 type Bits []byte
 
 func Encode(message string) (Bits, *Node) {
-	tree := BuildHuffmanTree(message)
+	tree := buildHuffmanTree(message)
 	bits := make(Bits, 0)
 	for _, c := range message {
 		bits = append(bits, encode(c, tree)...)

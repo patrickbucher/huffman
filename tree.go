@@ -33,7 +33,7 @@ func (n Nodes) Len() int           { return len(n) }
 func (n Nodes) Less(i, j int) bool { return n[i].Weight < n[j].Weight }
 func (n Nodes) Swap(i, j int)      { n[i], n[j] = n[j], n[i] }
 
-func BuildHuffmanTree(message string) *Node {
+func buildHuffmanTree(message string) *Node {
 	freqs := countFrequency(message)
 	leaves := createLeaves(freqs)
 	return buildTree(leaves)
